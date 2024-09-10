@@ -7,12 +7,19 @@ import customerRoutes from "./routes/customer";
 import saleRoutes from "./routes/Sale";
 import restaurantRoutes from "./routes/restaurant";
 import { ErrorMiddleWare } from "./middlewares/error.middleware";
+import router from "./routes";
+import cookieSession from "cookie-session";
 const app = express();
 dotenv.config();
 app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    signed: false,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api", customerRoutes);
+app.use("/v1/api", router);
 app.use("/api", saleRoutes);
 app.use("/api", restaurantRoutes);
 app.use("*", async (req, res) => {

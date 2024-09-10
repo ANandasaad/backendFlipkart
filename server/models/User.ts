@@ -7,14 +7,12 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     role: {
       type: String,
-      enum: ["Admin", "Customer"],
+      enum: ["Admin", "Customer", "Seller"],
       default: "Customer",
     },
   },
   { timestamps: true }
 );
-
-UserSchema.pre("save", () => {});
 
 const UserModel = mongoose.model("User", UserSchema);
 export default UserModel;

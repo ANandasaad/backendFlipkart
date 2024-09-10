@@ -12,17 +12,28 @@ export const UserController: {
   async signUp(req, res, next) {
     try {
       const input = req.body;
-      const response = await UserBusinessLogic.signUp(input);
+      const response = await UserBusinessLogic.signUp(req, input);
       res.send({
         success: true,
         message: "User signed up successfully",
         data: response,
       });
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   },
   async login(req, res, next) {
     try {
-    } catch (error) {}
+      const input = req.body;
+      const response = await UserBusinessLogic.login(req, input);
+      res.send({
+        success: true,
+        message: "User logged in successfully",
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
   },
   async updateProfile(req, res, next) {
     try {
@@ -34,7 +45,16 @@ export const UserController: {
   },
   async GetUserProfile(req, res, next) {
     try {
-    } catch (error) {}
+      const userId = req.currentUser?.id;
+      const response = await UserBusinessLogic.GetUserProfile(userId as string);
+      res.send({
+        success: true,
+        message: "User profile was successfully",
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
   },
   async GetUsers(req, res, next) {
     try {
